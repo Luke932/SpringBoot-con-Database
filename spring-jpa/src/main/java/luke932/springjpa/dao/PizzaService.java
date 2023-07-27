@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import luke932.springjpa.entities.Pizza;
+import luke932.springjpa.exceptions.ItemNotFoundException;
 
 @Service
 @Slf4j
@@ -21,20 +22,25 @@ public class PizzaService implements IPizzaDAO {
 
 	@Override
 	public void findByIdAndUpdate(Long id, Pizza pizza) {
-		// TODO Auto-generated method stub
+		Pizza found = this.findById(id);
 
+		found.setId(id);
+		found.setName(pizza.getName());
+		found.setCalories(pizza.getCalories());
+		found.setPrice(pizza.getPrice());
+
+		pizzaRep.save(found);
 	}
 
 	@Override
-	public void findByIdAndDelete(Long id) {
-		// TODO Auto-generated method stub
-
+	public void findByIdAndDelete(Long id) throws ItemNotFoundException {
+		Pizza found = this.findById(id);
+		pizzaRep.delete(found);
 	}
 
 	@Override
-	public Long findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Pizza findById(Long id) throws ItemNotFoundException {
+		return pizzaRep.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
 	}
 
 	@Override
@@ -44,14 +50,12 @@ public class PizzaService implements IPizzaDAO {
 
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+		return pizzaRep.count();
 	}
 
 	@Override
 	public List<Pizza> findByPartialNameIgnoreCase(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return pizzaRep.findByNameStartingWithIgnoreCase(name);
 	}
 
 }

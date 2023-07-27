@@ -11,7 +11,7 @@ public interface IPizzaDAO {
 
 	public void findByIdAndDelete(Long id);
 
-	public Long findById(Long id);
+	public Pizza findById(Long id);
 
 	public List<Pizza> findAll();
 
