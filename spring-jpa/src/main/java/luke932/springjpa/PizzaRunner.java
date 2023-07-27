@@ -22,7 +22,7 @@ public class PizzaRunner implements CommandLineRunner {
 		log.info(margherita.toString());
 		pDAO.save(margherita);
 
-		// ----------------FIND-ALL---------------------
+		// ----------------UPDATE---------------------
 		try {
 			Pizza marinara = new Pizza("Marinara", 9.50, 900);
 			pDAO.findByIdAndUpdate((long) 52, marinara);
@@ -47,7 +47,7 @@ public class PizzaRunner implements CommandLineRunner {
 			log.error(e.getMessage());
 		}
 
-		// ---------------FIND ALL-------------------------
+		// ---------------FIND-ALL-------------------------
 		pDAO.findAll().forEach(pizza -> log.info(pizza.toString()));
 
 		// ---------------FIND ALL IGNORE CASE-------------
